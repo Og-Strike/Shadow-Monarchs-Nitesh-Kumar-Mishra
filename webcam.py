@@ -34,7 +34,7 @@ def process_screenshot(path,name):
     # cpu_intensive_operation(25)
     current_dir=os.getcwd()
     # print(f"end {q}")
-    output_dir = os.path.join(current_dir, "pipeline.py")
+    output_dir = os.path.join(current_dir, "ocr.py")
     image_path = path
     name_image = name
     # Construct the command
@@ -98,6 +98,14 @@ def take_screenshot(frame, box):
     print(f"Screenshot taken: {filename}")
     return image_path,filename
 
+def is_frame_blurry(frame, threshold=0):
+    """Check if the frame is blurry using the Laplacian variance."""
+    if frame is None or not isinstance(frame, np.ndarray):
+        return True  # Treat as blurry if the frame is invalid
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    laplacian_var = cv2.Laplacian(gray, cv2.CV_64F).var()
+    print(laplacian_var)
+    return laplacian_var < threshold
 
 class SuppressOutput:
     def __enter__(self):
@@ -143,10 +151,14 @@ if __name__ == '__main__':
             print("Error: Could not read frame.")
             break
 
-
         # Perform detection and tracking with suppressed output
         with SuppressOutput():
             results = model.track(frame, persist=True)
+
+        # Check if the frame is too blurry
+        # if is_frame_blurry(frame):
+        #     print("Skipping frame: too blurry")
+        #     continue
 
         # Get the detected bounding boxes and labels
         if len(results) > 0 and results[0].boxes is not None:
@@ -166,24 +178,28 @@ if __name__ == '__main__':
                 track_id = ids[i] if len(ids) > 0 else None
                 class_id = int(classes[i])
 
-                # Process only human class (class_id == 0)
+                # Process only the human class (class_id == 0)
                 if class_id == 7:
                     if roi_x1 is not None and roi_x2 is not None and check_roi_crossing((x1, y1, x2, y2), roi_x1, roi_x2, frame_height) and check_body_coverage(keypoints=keypoints):
                         if track_id not in captured_boxes:
-
                             if len(processes) < max_processes:
-                                image,name_image=take_screenshot(frame, (x1, y1, x2, y2))
-                                p = mp.Process(target=process_screenshot, args=(image,name_image,))
-                                p.start()
-                                processes.append(p)
-                                captured_boxes.append(track_id)
-                                last_screenshot_time = current_time
-                                roi_crossed = True
-                                print("Yeah")
+                                # Capture screenshot if not blurry
+                                x1, y1, x2, y2 = map(int, box)
+                                if not is_frame_blurry(frame[y1:y2, x1:x2]):  # Double-check if the region captured is sharp
+                                    image, name_image = take_screenshot(frame, (x1, y1, x2, y2))
+                                    p = mp.Process(target=process_screenshot, args=(image, name_image,))
+                                    p.start()
+                                    processes.append(p)
+                                    captured_boxes.append(track_id)
+                                    last_screenshot_time = current_time
+                                    roi_crossed = True
+                                    print("Screenshot captured successfully")
+                                else:
+                                    print("Skipped: Detected blur in screenshot region.")
                             else:
                                 print("Queue full!")
                     cv2.rectangle(frame, (int(x1), int(y1)), (int(x2), int(y2)), (0, 255, 0), 2)
-                # Draw track ID if available
+                    # Draw track ID if available
                     if track_id is not None:
                         cv2.putText(frame, f'ID: {track_id}', (int(x1), int(y1) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
 
@@ -207,8 +223,6 @@ if __name__ == '__main__':
         # Press 'q' to quit
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
-
-        
 
     # Release the capture
     cap.release()
