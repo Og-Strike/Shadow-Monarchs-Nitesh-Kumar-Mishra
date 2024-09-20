@@ -11,7 +11,33 @@ from kivy.uix.label import Label
 from kivy.uix.image import Image
 from kivy.core.window import Window
 from kivy.config import Config
+import cv2
+import numpy as np
+import time
+from datetime import datetime
+from ultralytics import YOLO
+import sys
+import os
+import logging
+import multiprocessing as mp
+import requests
+import imutils
+import subprocess
+import re
 import webbrowser
+from kivymd.uix.spinner import MDSpinner
+from kivymd.uix.menu import MDDropdownMenu
+from kivy.uix.dropdown import DropDown
+from kivymd.uix.pickers import MDDatePicker
+from kivymd.toast import toast
+from matplotlib import pyplot as plt
+import pandas as pd
+from oauth2client.service_account import ServiceAccountCredentials
+import gspread
+from kivy.properties import StringProperty
+from kivymd.uix.datatables import MDDataTable
+from kivy.metrics import dp
+from tkinter import filedialog, messagebox
 
 Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
 
@@ -284,11 +310,63 @@ MDBoxLayout:
                             text_color: 0, 1, 1, 1 
 ''')
     
+    def show_popup(self):
+        title = "Not Valid URL"
+        message = "Please Enter Valid URL"
+        dialog = MDDialog(
+            title=title,
+            type="alert",
+            text=message,
+            size_hint=(0.8, 0.3),
+            auto_dismiss=True,
+            buttons=[
+                MDFillRoundFlatIconButton(
+                    text="Close",
+                    on_release=lambda x: dialog.dismiss()
+                )
+            ]
+        )
+        dialog.open()
+
+    def show_error_dialog(self,Message):
+        self.dialog = MDDialog(
+                title="Error",
+                text=Message,
+                buttons=[
+                    MDFillRoundFlatIconButton(
+                        text="Close",
+                        on_release=lambda x: self.dialog.dismiss()
+                    )
+                ]
+            )
+        self.dialog.open()
+    
     def video(self):
-        pass
+        try:
+            video_path = filedialog.askopenfilename(title="Select an Image", filetypes=[("Image files", "*.mp4")])
+            command = ["python","webcam.py",f"{video_path}"]
+            subprocess.run(command)
+        except Exception as e:
+            self.show_error_dialog(str(e))
 
     def phonecam(self):
-        pass
+    
+        url = self.root.ids.text_input.text
+        ipv4_pattern = re.compile(
+            r'^(http|https):\/\/'
+            r'((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}'
+            r'(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)'
+            r'(:[0-9]{1,5})?$'
+        )
+        if re.match(ipv4_pattern, url):
+            url = url + "/shot.jpg"
+            try:
+                command = ["python","phonecam.py",f"{url}"]
+                subprocess.run(command)
+            except Exception as e:
+                self.show_error_dialog(str(e))
+        else:
+            self.show_popup()
     
     def menu_open(self):
         pass
@@ -322,3 +400,17 @@ MDBoxLayout:
     
 if __name__ == '__main__':
     MainApp().run()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
