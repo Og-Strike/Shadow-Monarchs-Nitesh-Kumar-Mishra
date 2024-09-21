@@ -190,7 +190,7 @@ MDBoxLayout:
                         orientation: 'vertical'
                                                
             Screen:
-                name: "Anylisys"
+                name: "Analysis"
                 RelativeLayout:
                     orientation: 'vertical'
                     padding: dp(20)
@@ -299,12 +299,12 @@ MDBoxLayout:
                             theme_text_color: "Custom" 
                             text_color: 0, 1, 1, 1 
                     OneLineIconListItem:
-                        text: "Anylisys"
+                        text: "Analysis"
                         theme_text_color: "Custom" 
                         text_color: 0, 1, 1, 1 
                         on_press:
                             nav_drawer.set_state("close")
-                            screen_manager.current = "Anylisys"
+                            screen_manager.current = "Analysis"
                         IconLeftWidget:
                             icon: "graph"
                             theme_text_color: "Custom" 
