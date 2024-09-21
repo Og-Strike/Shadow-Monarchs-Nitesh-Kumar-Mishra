@@ -129,19 +129,13 @@
 
    Here is a very simple, beautful and easy to use UI.
    
-   ![Sample Graph](path_to_sample_graph_image)
+   ![Sample Graph](UI_HomePage.jpg)
 
 5. **Graph Generation**:
 
    Graphs based on the receipts' data will be saved in the `graphs` directory.
-
-   Graph 1:
    
-   ![Sample Graph](path_to_sample_graph_image)
-
-   Graph 2:
-
-   ![Sample Graph](path_to_sample_graph_image)
+   ![Sample Graph](Graph_UI.jpg)
 
 ## Project Structure
 
