@@ -41,43 +41,43 @@
 
     ```bash
     from kivy.lang import Builder
-from kivymd.app import MDApp
-from kivymd.uix.dialog import MDDialog
-from kivymd.uix.button import MDFillRoundFlatIconButton
-from kivymd.uix.toolbar import MDTopAppBar
-from kivymd.uix.list import OneLineIconListItem, IconLeftWidget
-from kivymd.uix.navigationdrawer import MDNavigationDrawer
-from kivy.uix.screenmanager import ScreenManager, Screen
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.label import Label
-from kivy.uix.image import Image
-from kivy.core.window import Window
-from kivy.config import Config
-import time
-from datetime import datetime
-from ultralytics import YOLO
-import sys
-import os
-import logging
-import multiprocessing as mp
-import requests
-import imutils
-import subprocess
-import re
-import webbrowser
-from kivymd.uix.spinner import MDSpinner
-from kivymd.uix.menu import MDDropdownMenu
-from kivy.uix.dropdown import DropDown
-from kivymd.uix.pickers import MDDatePicker
-from kivymd.toast import toast
-from matplotlib import pyplot as plt
-import pandas as pd
-from oauth2client.service_account import ServiceAccountCredentials
-import gspread
-from kivy.properties import StringProperty
-from kivymd.uix.datatables import MDDataTable
-from kivy.metrics import dp
-from tkinter import filedialog, messagebox
+    from kivymd.app import MDApp
+    from kivymd.uix.dialog import MDDialog
+    from kivymd.uix.button import MDFillRoundFlatIconButton
+    from kivymd.uix.toolbar import MDTopAppBar
+    from kivymd.uix.list import OneLineIconListItem, IconLeftWidget
+    from kivymd.uix.navigationdrawer import MDNavigationDrawer
+    from kivy.uix.screenmanager import ScreenManager, Screen
+    from kivy.uix.boxlayout import BoxLayout
+    from kivy.uix.label import Label
+    from kivy.uix.image import Image
+    from kivy.core.window import Window
+    from kivy.config import Config
+    import time
+    from datetime import datetime
+    from ultralytics import YOLO
+    import sys
+    import os
+    import logging
+    import multiprocessing as mp
+    import requests
+    import imutils
+    import subprocess
+    import re
+    import webbrowser
+    from kivymd.uix.spinner import MDSpinner
+    from kivymd.uix.menu import MDDropdownMenu
+    from kivy.uix.dropdown import DropDown
+    from kivymd.uix.pickers import MDDatePicker
+    from kivymd.toast import toast
+    from matplotlib import pyplot as plt
+    import pandas as pd
+    from oauth2client.service_account import ServiceAccountCredentials
+    import gspread
+    from kivy.properties import StringProperty
+    from kivymd.uix.datatables import MDDataTable
+    from kivy.metrics import dp
+    from tkinter import filedialog, messagebox
     ```
 
     You may need to install Tesseract OCR manually:
