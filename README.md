@@ -155,4 +155,5 @@
 ```
 ## License
 
-  This project is not currently licensed. All rights reserved by the project owner. Please contact the author for permissions or inquiries regarding usage.
+  This project is not currently licensed. All rights reserved by the project owner.
+  Please contact the author for permissions or inquiries regarding usage.
