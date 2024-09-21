@@ -27,20 +27,22 @@
 - **Python**: Core logic implementation.
 - **Matplotlib & Seaborn**: For generating graphs.
 - **Pandas**: For storing and managing the CSV data.
+- **Kivymd**: For creating a visually stunning UI.
 
 ## Installation
 
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/your-repo/Bill-Wizard.git
-    cd Bill-Wizard
+    git clone https://https://github.com/Og-Strike/Shadow-Monarchs-Nitesh-Kumar-Mishra
     ```
 
-2. Install the required dependencies:
+2. Here are the required Imports:
 
     ```bash
-    pip install -r requirements.txt
+    import kivy.py
+    import kivymd.py
+    import numpy.py
     ```
 
     You may need to install Tesseract OCR manually:
