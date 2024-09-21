@@ -14,6 +14,7 @@
 - **Capture Video Input**: Uses OpenCV to capture multiple receipts appearing in a video frame.
 - **OCR Processing**: Utilizes Tesseract to process the text from the receipts.
 - **Data Extraction & Storage**: Extracts receipt data such as store name, items, prices, dates, etc., and stores them in a CSV file.
+- **Maximum customer flexibility**: Can convert files to .json, .xml or .csv as per your choice.
 - **Graph Generation**: Creates visual insights based on:
   - Expenditure
   - Dates
@@ -25,7 +26,7 @@
 - **OpenCV**: For capturing video frames.
 - **Tesseract OCR**: For extracting text from the receipts.
 - **Python**: Core logic implementation.
-- **Matplotlib & Seaborn**: For generating graphs.
+- **Matplotlib**: For generating graphs.
 - **Pandas**: For storing and managing the CSV data.
 - **Kivymd**: For creating a visually stunning UI.
 
