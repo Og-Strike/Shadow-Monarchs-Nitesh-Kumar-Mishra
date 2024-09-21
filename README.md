@@ -99,18 +99,17 @@
     import matplotlib.pyplot as plt
     import sys
     import argparse
+    import json
+    import xml.etree.ElementTree as ET
     ```
 
 ## Usage
 
-1. **Run the scripts:**
+1. **Run the main scripts:**
 
     ```bash
     python main.py #main script
     python ocr.py
-    python phonecam.py
-    python webcam.py
-    data.py
     ```
 
 2. **Provide video input**:
@@ -125,20 +124,32 @@
    - Dates
    - Total amount spent
 
-4. **Graph Generation**:
+4. **User Interface**:
+
+   Here is a very simple, beautful and easy to use UI.
+   
+   ![Sample Graph](path_to_sample_graph_image)
+
+5. **Graph Generation**:
 
    Graphs based on the receipts' data will be saved in the `graphs` directory.
+
+   Graph 1:
    
+   ![Sample Graph](path_to_sample_graph_image)
+
+   Graph 2:
+
    ![Sample Graph](path_to_sample_graph_image)
 
 ## Project Structure
 
 ```bash
 .
-├── main.py               # Main script to run the project
-├── requirements.txt      # List of dependencies
-├── README.md             # Project readme file
-├── data/                 # Directory for storing CSV files
-├── graphs/               # Directory for storing generated graphs
-└── utils/                # Utility functions for OCR, data extraction, etc.
+├── main.py                  # Main script to run the project
+├── data.py                  # Contains the datasets
+├── README.md                # Project readme file
+├── ocr.py                   # Cotains the OCR logic using Tesseract
+├── phonecam.py              # Script to run code via phone as a webcam.
+└── webcam.py                # Script to run webcam of PC.
 ```
