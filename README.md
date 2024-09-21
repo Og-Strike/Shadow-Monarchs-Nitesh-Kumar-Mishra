@@ -1,7 +1,7 @@
 # Shadow-Monarchs-Bill-Wizard
 # Bill Wizard
 
-![Project Logo]('C:\Users\redil\Downloads\billwizardlogo.jpg')
+![Project Logo](og2.png)
 
 **Bill Wizard** is a robust tool designed to process store receipts through video input, leveraging OCR technology to extract data and generate insightful graphs. This project was developed for the **Lens Xplore Hackathon** by our team:
 
