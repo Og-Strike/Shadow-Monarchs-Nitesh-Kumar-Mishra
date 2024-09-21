@@ -153,3 +153,6 @@
 ├── phonecam.py              # Script to run code via phone as a webcam.
 └── webcam.py                # Script to run webcam of PC.
 ```
+## License
+
+  This project is not currently licensed. All rights reserved by the project owner. Please contact the author for permissions or inquiries regarding usage.
