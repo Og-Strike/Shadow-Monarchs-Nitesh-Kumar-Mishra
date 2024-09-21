@@ -96,6 +96,15 @@ def take_screenshot(frame, box):
     print(f"Screenshot taken: {filename}")
     return image_path,filename
 
+def is_frame_blurry(frame, threshold=1500):
+    """Check if the frame is blurry using the Laplacian variance."""
+    if frame is None or not isinstance(frame, np.ndarray):
+        return True  # Treat as blurry if the frame is invalid
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    laplacian_var = cv2.Laplacian(gray, cv2.CV_64F).var()
+    print(laplacian_var)
+    return laplacian_var < threshold
+
 
 class SuppressOutput:
     def __enter__(self):
@@ -165,14 +174,17 @@ if __name__ == '__main__':
                         if track_id not in captured_boxes:
 
                             if len(processes) < max_processes:
-                                image,name_image=take_screenshot(frame, (x1, y1, x2, y2))
-                                p = mp.Process(target=process_screenshot, args=(image,name_image,))
-                                p.start()
-                                processes.append(p)
-                                captured_boxes.append(track_id)
-                                last_screenshot_time = current_time
-                                roi_crossed = True
-                                print("Yeah")
+                                if not is_frame_blurry(frame[y1:y2, x1:x2]):  # Double-check if the region captured is sharp
+                                    image, name_image = take_screenshot(frame, (x1, y1, x2, y2))
+                                    p = mp.Process(target=process_screenshot, args=(image, name_image,))
+                                    p.start()
+                                    processes.append(p)
+                                    captured_boxes.append(track_id)
+                                    last_screenshot_time = current_time
+                                    roi_crossed = True
+                                    print("Yeah")
+                                else:
+                                    print("Skipped: Detected blur in screenshot region.")
                             else:
                                 print("Queue full!")
                     cv2.rectangle(frame, (int(x1), int(y1)), (int(x2), int(y2)), (0, 255, 0), 2)

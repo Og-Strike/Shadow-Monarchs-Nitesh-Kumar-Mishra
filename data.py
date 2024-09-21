@@ -1,48 +1,33 @@
 import pandas as pd
-import matplotlib.pyplot as plt
+import os
+import sys
 
-# Create the dataset
-data = {
-    "Date": ["2024-09-18", "2024-09-19", "2024-09-20", "2024-09-21"],
-    "Total Bill": [150, 75, 200, 300],
-    "Store Name": ["GroceryMart", "CoffeeShop", "Electronics", "SuperStore"]
-}
+def create_dataset(company, date, total_amount, tax_amount, gst):
+    # Create the dataset
+    data = {
+        "Company": [company],  # Wrap in lists
+        "Date": [date],
+        "Total Amount": [total_amount],
+        "Tax Amount": [tax_amount],
+        "GST": [gst]
+    }
 
-# Create a DataFrame
-df = pd.DataFrame(data)
+    # Create a DataFrame
+    df = pd.DataFrame(data)
 
-# Save the DataFrame as a CSV file
-csv_file_path = r'C:\Users\redil\Downloads\BillWizard\BillWizard\daily_expenditure.csv'
-df.to_csv(csv_file_path, index=False)
+    # Define the CSV file path
+    csv_file_path = 'daily_expenditure.csv'
 
-# Bar graph: Date vs. Total Bill
-plt.figure(figsize=(8, 5))
-plt.bar(df['Date'], df['Total Bill'], color='blue')
-plt.title('Daily Expenditures')
-plt.xlabel('Date')
-plt.ylabel('Total Bill')
-plt.xticks(rotation=45)
-plt.tight_layout()
-bar_graph_path = r'C:\Users\redil\Downloads\BillWizard\BillWizard\bar_graph.png'
-plt.savefig(bar_graph_path)
-plt.show()
+    # Check if the file already exists
+    if os.path.isfile(csv_file_path):
+        # Append data to the existing CSV without writing the header
+        df.to_csv(csv_file_path, mode='a', header=False, index=False)
+    else:
+        # Write the data with the header for the first time
+        df.to_csv(csv_file_path, mode='w', header=True, index=False)
 
-# Pie chart: Distribution of spending by store
-plt.figure(figsize=(7, 7))
-plt.pie(df['Total Bill'], labels=df['Store Name'], autopct='%1.1f%%', startangle=140)
-plt.title('Spending Distribution by Store')
-pie_chart_path = r'C:\Users\redil\Downloads\BillWizard\BillWizard\pie_chart.png'
-plt.savefig(pie_chart_path)
-plt.show()
+    print(f"Data saved to {csv_file_path}")
+    return df
 
-# Line plot: Date vs. Total Bill
-plt.figure(figsize=(8, 5))
-plt.plot(df['Date'], df['Total Bill'], marker='o', color='green', linestyle='-', markersize=8)
-plt.title('Total Bill vs. Date')
-plt.xlabel('Date')
-plt.ylabel('Total Bill')
-plt.xticks(rotation=45)
-plt.tight_layout()
-line_plot_path = r'C:\Users\redil\Downloads\BillWizard\BillWizard\plot_graph.png'
-plt.savefig(line_plot_path)
-plt.show()
+# Example usage passing command-line arguments
+create_dataset(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5])

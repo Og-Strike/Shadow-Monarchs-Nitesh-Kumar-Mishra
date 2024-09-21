@@ -98,7 +98,7 @@ def take_screenshot(frame, box):
     print(f"Screenshot taken: {filename}")
     return image_path,filename
 
-def is_frame_blurry(frame, threshold=0):
+def is_frame_blurry(frame, threshold=1500):
     """Check if the frame is blurry using the Laplacian variance."""
     if frame is None or not isinstance(frame, np.ndarray):
         return True  # Treat as blurry if the frame is invalid
